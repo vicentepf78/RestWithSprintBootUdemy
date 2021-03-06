@@ -3,6 +3,7 @@ package br.com.erudio.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,28 +25,30 @@ public class PersonController {
 	@Autowired
 	private PersonService services;
 
-	@GetMapping
+	@GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, "application/x-yaml"})
 	public List<PersonVO> findAll() {
 		return services.findAll();
 	}
 
-	@GetMapping("/{id}")
+	@GetMapping(value = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, "application/x-yaml"})
 	public PersonVO findById(@PathVariable("id") Long id) {
 		return services.findById(id);
 	}
 
-	@PostMapping
+	@PostMapping(produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, "application/x-yaml"},
+			     consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, "application/x-yaml"})
 	public PersonVO create(@RequestBody PersonVO person) throws Exception {
 		return services.create(person);
 	}
 	
-	@PostMapping("/v2")
+	@PostMapping(value = "/v2", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, "application/x-yaml"})
 	public PersonVOV2 createV2(@RequestBody PersonVOV2 person) throws Exception {
 		return services.createV2(person);
 	}
 
 	
-	@PutMapping
+	@PutMapping(produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, "application/x-yaml"},
+			    consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, "application/x-yaml"})
 	public PersonVO update(@RequestBody PersonVO person) {
 		return services.update(person);
 	}
