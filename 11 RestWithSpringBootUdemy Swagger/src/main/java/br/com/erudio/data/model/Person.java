@@ -1,35 +1,45 @@
-package br.com.erudio.data.vo.v1;
+package br.com.erudio.data.model;
 
 import java.io.Serializable;
 
-import org.springframework.hateoas.ResourceSupport;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.github.dozermapper.core.Mapping;
-
-@JsonPropertyOrder({"id", "firstName", "lastName", "address", "gender"})
-public class PersonVO extends ResourceSupport implements Serializable {
+@Entity
+@Table(name = "person")
+public class Person implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Mapping("id")
-	@JsonProperty("id")
-	private Long key;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
+	@Column(name = "first_name", nullable = false, length = 80)
 	private String firstName;
+	
+	@Column(name = "last_name", nullable = false, length = 80)
 	private String lastName;
+	
+	@Column(nullable = false, length = 100)
 	private String address;
+	
+	@Column(nullable = false, length = 6)
 	private String gender;
 
-	public PersonVO() {
+	public Person() {
 	}
 
-	public Long getKey() {
-		return key;
+	public Long setId(Long id) {
+		return this.id = id;
 	}
 
-	public void setKey(Long key) {
-		this.key = key;
+	public Long getId() {
+		return id;
 	}
 
 	public String getFirstName() {
@@ -71,11 +81,11 @@ public class PersonVO extends ResourceSupport implements Serializable {
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = super.hashCode();
+		int result = 1;
 		result = prime * result + ((address == null) ? 0 : address.hashCode());
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
-		result = prime * result + ((key == null) ? 0 : key.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		return result;
 	}
@@ -84,11 +94,11 @@ public class PersonVO extends ResourceSupport implements Serializable {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (!super.equals(obj))
+		if (obj == null)
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		PersonVO other = (PersonVO) obj;
+		Person other = (Person) obj;
 		if (address == null) {
 			if (other.address != null)
 				return false;
@@ -104,10 +114,10 @@ public class PersonVO extends ResourceSupport implements Serializable {
 				return false;
 		} else if (!gender.equals(other.gender))
 			return false;
-		if (key == null) {
-			if (other.key != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!key.equals(other.key))
+		} else if (!id.equals(other.id))
 			return false;
 		if (lastName == null) {
 			if (other.lastName != null)

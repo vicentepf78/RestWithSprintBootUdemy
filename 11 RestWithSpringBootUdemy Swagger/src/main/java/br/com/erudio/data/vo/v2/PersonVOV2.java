@@ -1,35 +1,28 @@
-package br.com.erudio.data.vo.v1;
+package br.com.erudio.data.vo.v2;
 
 import java.io.Serializable;
+import java.util.Date;
 
-import org.springframework.hateoas.ResourceSupport;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.github.dozermapper.core.Mapping;
-
-@JsonPropertyOrder({"id", "firstName", "lastName", "address", "gender"})
-public class PersonVO extends ResourceSupport implements Serializable {
+public class PersonVOV2 implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Mapping("id")
-	@JsonProperty("id")
-	private Long key;
+	private Long id;
 	private String firstName;
 	private String lastName;
 	private String address;
 	private String gender;
+	private Date birthDay;
 
-	public PersonVO() {
+	public PersonVOV2() {
 	}
 
-	public Long getKey() {
-		return key;
+	public Long setId(Long id) {
+		return this.id = id;
 	}
 
-	public void setKey(Long key) {
-		this.key = key;
+	public Long getId() {
+		return id;
 	}
 
 	public String getFirstName() {
@@ -68,14 +61,23 @@ public class PersonVO extends ResourceSupport implements Serializable {
 		return serialVersionUID;
 	}
 
+	public Date getBrithDay() {
+		return birthDay;
+	}
+
+	public void setBrithDay(Date brithDay) {
+		this.birthDay = brithDay;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = super.hashCode();
+		int result = 1;
 		result = prime * result + ((address == null) ? 0 : address.hashCode());
+		result = prime * result + ((birthDay == null) ? 0 : birthDay.hashCode());
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
-		result = prime * result + ((key == null) ? 0 : key.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		return result;
 	}
@@ -84,15 +86,20 @@ public class PersonVO extends ResourceSupport implements Serializable {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (!super.equals(obj))
+		if (obj == null)
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		PersonVO other = (PersonVO) obj;
+		PersonVOV2 other = (PersonVOV2) obj;
 		if (address == null) {
 			if (other.address != null)
 				return false;
 		} else if (!address.equals(other.address))
+			return false;
+		if (birthDay == null) {
+			if (other.birthDay != null)
+				return false;
+		} else if (!birthDay.equals(other.birthDay))
 			return false;
 		if (firstName == null) {
 			if (other.firstName != null)
@@ -104,10 +111,10 @@ public class PersonVO extends ResourceSupport implements Serializable {
 				return false;
 		} else if (!gender.equals(other.gender))
 			return false;
-		if (key == null) {
-			if (other.key != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!key.equals(other.key))
+		} else if (!id.equals(other.id))
 			return false;
 		if (lastName == null) {
 			if (other.lastName != null)
