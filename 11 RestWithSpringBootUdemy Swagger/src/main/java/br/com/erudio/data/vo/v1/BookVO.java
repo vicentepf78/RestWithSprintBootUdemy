@@ -1,46 +1,33 @@
-package br.com.erudio.data.model;
+package br.com.erudio.data.vo.v1;
 
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import org.springframework.hateoas.ResourceSupport;
 
-@Entity
-@Table(name = "books")
-public class Books implements Serializable {
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.github.dozermapper.core.Mapping;
+
+@JsonPropertyOrder({"id", "author", "launchDate", "price", "title"})
+public class BookVO extends ResourceSupport implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-
-	@Column(name = "author", length = 80)
+	@Mapping("id")
+	@JsonProperty("id")
+	private Long key;
 	private String author;
-
-	@Column(name = "launch_date", nullable = false)
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date launchDate;
-
-	@Column(name = "price", nullable = false, precision = 65, scale = 2)
 	private Double price;
-
-	@Column(name = "title")
 	private String title;
 
-	public Long getId() {
-		return id;
+	public Long getKey() {
+		return key;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setKey(Long key) {
+		this.key = key;
 	}
 
 	public String getAuthor() {
@@ -78,9 +65,9 @@ public class Books implements Serializable {
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
+		int result = super.hashCode();
 		result = prime * result + ((author == null) ? 0 : author.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((key == null) ? 0 : key.hashCode());
 		result = prime * result + ((launchDate == null) ? 0 : launchDate.hashCode());
 		result = prime * result + ((price == null) ? 0 : price.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
@@ -91,20 +78,20 @@ public class Books implements Serializable {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
+		if (!super.equals(obj))
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Books other = (Books) obj;
+		BookVO other = (BookVO) obj;
 		if (author == null) {
 			if (other.author != null)
 				return false;
 		} else if (!author.equals(other.author))
 			return false;
-		if (id == null) {
-			if (other.id != null)
+		if (key == null) {
+			if (other.key != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!key.equals(other.key))
 			return false;
 		if (launchDate == null) {
 			if (other.launchDate != null)

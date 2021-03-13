@@ -20,7 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.erudio.data.vo.v1.PersonVO;
 import br.com.erudio.data.vo.v2.PersonVOV2;
 import br.com.erudio.services.PersonService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
+@Api(value = "Person Endpoint", description = "Descripton for person", tags = {"PersonEndpoint"})
 @RestController
 @RequestMapping("/api/person/v1")
 public class PersonController {
@@ -28,6 +31,7 @@ public class PersonController {
 	@Autowired
 	private PersonService services;
 
+	@ApiOperation(value = "Find all people recorded.")
 	@GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, "application/x-yaml"})
 	public List<PersonVO> findAll() {
 		List<PersonVO> personVOs = services.findAll();
@@ -37,6 +41,7 @@ public class PersonController {
 		return personVOs;
 	}
 
+	@ApiOperation(value = "Buscar uma pessoa pelo identificador.")
 	@GetMapping(value = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, "application/x-yaml"})
 	public PersonVO findById(@PathVariable("id") Long id) {
 		PersonVO personVO = services.findById(id);
@@ -44,6 +49,7 @@ public class PersonController {
 		return personVO;
 	}
 
+	@ApiOperation(value = "Criar uma pessoa.")
 	@PostMapping(produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, "application/x-yaml"},
 			     consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, "application/x-yaml"})
 	public PersonVO create(@RequestBody PersonVO person) throws Exception {
@@ -53,12 +59,13 @@ public class PersonController {
 
 	}
 	
+	@ApiOperation(value = "Criar uma pessoa versão 2.")
 	@PostMapping(value = "/v2", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, "application/x-yaml"})
 	public PersonVOV2 createV2(@RequestBody PersonVOV2 person) throws Exception {
 		return services.createV2(person);
 	}
 
-	
+	@ApiOperation(value = "Atualizar registro de uma pessoa.")
 	@PutMapping(produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, "application/x-yaml"},
 			    consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, "application/x-yaml"})
 	public PersonVO update(@RequestBody PersonVO person) {
@@ -67,6 +74,7 @@ public class PersonController {
 		return personVO;
 	}
 
+	@ApiOperation(value = "Apagar registro de uma pessoal.")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
 		services.delete(id);
