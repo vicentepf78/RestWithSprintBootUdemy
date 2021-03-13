@@ -9,10 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
 @Entity
-@Table(name="person")
-public class Person implements Serializable{
+@Table(name = "person")
+public class Person implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -31,16 +30,16 @@ public class Person implements Serializable{
 	
 	@Column(nullable = false, length = 6)
 	private String gender;
-	
+
 	public Person() {
+	}
+
+	public Long setId(Long id) {
+		return this.id = id;
 	}
 
 	public Long getId() {
 		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getFirstName() {
@@ -73,6 +72,10 @@ public class Person implements Serializable{
 
 	public void setGender(String gender) {
 		this.gender = gender;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	@Override
@@ -123,4 +126,5 @@ public class Person implements Serializable{
 			return false;
 		return true;
 	}
+
 }

@@ -12,32 +12,28 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-
 @Entity
-@Table(name="books")
-public class Book implements Serializable{
+@Table(name = "books")
+public class Book implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@Column(name = "author", nullable = false, length = 180)
+
+	@Column(name = "author", length = 180)
 	private String author;
-	
+
 	@Column(name = "launch_date", nullable = false)
 	@Temporal(TemporalType.DATE)
 	private Date launchDate;
-	
-	@Column(nullable = false)
+
+	@Column(name = "price", nullable = false, precision = 65, scale = 2)
 	private Double price;
-	
-	@Column(nullable = false, length = 250)
+
+	@Column(name = "title", length = 250)
 	private String title;
-	
-	public Book() {
-	}
 
 	public Long getId() {
 		return id;
@@ -127,4 +123,5 @@ public class Book implements Serializable{
 			return false;
 		return true;
 	}
+
 }

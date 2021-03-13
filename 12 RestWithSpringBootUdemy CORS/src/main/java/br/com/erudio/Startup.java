@@ -9,8 +9,10 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableAutoConfiguration
 @ComponentScan
 public class Startup {
-
+	
+	
 	public static void main(String[] args) {
 		SpringApplication.run(Startup.class, args);
 	}
+
 }

@@ -16,7 +16,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
-
+	
 	@Bean
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2)
@@ -29,11 +29,14 @@ public class SwaggerConfig {
 
 	private ApiInfo apiInfo() {
 		return new ApiInfo(
-				"RESTful API With Spring Boot 2.1.3", 
-				"Some description about your API.",
-				"v1",
-				"Terms Of Service Url",
-				new Contact("Leandro Costa", "www.erudio.com.br", "your_email@gmail.com"),
-				"License of API", "License of URL", Collections.emptyList());
+				"RESTfull API With Spring Boot 2.1.3",
+				"Some description about your API.", 
+				"v1", 
+				"Terms of Service Url", 
+			new Contact("Vicente de Paula Filho", "https://github.com/vicentepf78", "vicentepf78@gmail.com"), 
+				"License of API", 
+				"License of URL", 
+				Collections.emptyList());
 	}
+
 }

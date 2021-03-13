@@ -9,9 +9,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.github.dozermapper.core.Mapping;
 
-@JsonPropertyOrder({ "id", "author", "launchDate", "price", "title" })
-public class BookVO extends ResourceSupport implements Serializable{
- 
+@JsonPropertyOrder({"id", "author", "launchDate", "price", "title"})
+public class BookVO extends ResourceSupport implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	@Mapping("id")
@@ -21,9 +21,6 @@ public class BookVO extends ResourceSupport implements Serializable{
 	private Date launchDate;
 	private Double price;
 	private String title;
-	
-	public BookVO() {
-	}
 
 	public Long getKey() {
 		return key;
@@ -113,4 +110,5 @@ public class BookVO extends ResourceSupport implements Serializable{
 			return false;
 		return true;
 	}
+
 }
