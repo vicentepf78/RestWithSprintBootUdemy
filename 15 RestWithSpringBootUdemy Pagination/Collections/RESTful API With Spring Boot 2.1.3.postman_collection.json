@@ -193,7 +193,7 @@
 					"name": "Person",
 					"item": [
 						{
-							"name": "Find all people",
+							"name": "Find all people with token name",
 							"request": {
 								"method": "GET",
 								"header": [

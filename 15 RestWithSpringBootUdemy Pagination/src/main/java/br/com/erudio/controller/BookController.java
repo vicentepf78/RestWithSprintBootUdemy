@@ -3,9 +3,15 @@ package br.com.erudio.controller;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.PagedResources;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.erudio.data.vo.v1.BookVO;
@@ -24,20 +31,33 @@ import io.swagger.annotations.ApiOperation;
 
 @Api(value = "Book Endpoint", description = "Descripton for book", tags = {"BookEndpoint"})
 @RestController
-@RequestMapping("/api/books/v1")
+@RequestMapping("/api/book/v1")
 public class BookController {
 	
 	@Autowired
 	private BookService services;
+	
+	@Autowired
+	private PagedResourcesAssembler<BookVO> assembler;
 
 	@ApiOperation(value = "Buscar todos os livros.")
 	@GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, "application/x-yaml"})
-	public List<BookVO> findAll() {
-		List<BookVO> booksVOs = services.findAll();
-		booksVOs
+	public ResponseEntity<?> findAll(@RequestParam(value = "page", defaultValue = "0") int page,
+			@RequestParam(value = "limit", defaultValue = "12") int limit,
+			@RequestParam(value = "direction", defaultValue = "asc") String direction) {
+		
+		var sortDirection = "desc".equalsIgnoreCase(direction) ? Direction.DESC : Direction.ASC;
+		
+		Pageable pageable = PageRequest.of(page, limit, Sort.by(sortDirection, "author"));
+		
+		Page<BookVO> books = services.findAll(pageable);
+		books
 			.stream()
 			.forEach(p -> p.add(linkTo(methodOn(BookController.class).findById(p.getKey())).withSelfRel()));
-		return booksVOs;
+		
+		PagedResources<?> resources = assembler.toResource(books);
+		
+		return new ResponseEntity<>(resources, HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "Buscar um livro pelo identificador.")
