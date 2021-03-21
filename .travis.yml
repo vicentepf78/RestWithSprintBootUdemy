@@ -6,13 +6,13 @@ before_install:
 script:
   - docker-compose build 
 before_deploy:
-  - echo "${DOCKER_PASSWORD}" || docker login --username "${DOCKER_USERNAME}" -- password_stdin
+  - echo "${DOCKER_PASSWORD}" | docker login --username "${DOCKER_USERNAME}" -- password-stdin
 deploy:
   provider: script
   script: 
     docker push vicentepf78/mysql-rest-with-spring-boot-udemy;
     docker push vicentepf78/rest-with-spring-boot-udemy;
   on: 
-    branch: main
+    branch: master
 notifications: 
   email: false      
