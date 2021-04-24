@@ -208,7 +208,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{host}}/api/person/v1",
+									"raw": "{{host}}/api/person/v1?page=0&limit=10&direction=desc",
 									"host": [
 										"{{host}}"
 									],
@@ -216,6 +216,20 @@
 										"api",
 										"person",
 										"v1"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										},
+										{
+											"key": "direction",
+											"value": "desc"
+										}
 									]
 								}
 							},
@@ -453,6 +467,162 @@
 				}
 			],
 			"description": "Folder for api"
+		},
+		{
+			"name": "File",
+			"item": [
+				{
+					"name": "Upload a file",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content_accept}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{content_type}}"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{bearer_token}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/Users/usuario/Downloads/TestUpload/01 Pista 1.mp3"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/api/file/v1/uploadFile",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"file",
+								"v1",
+								"uploadFile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upload multiple files",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content_accept}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{content_type}}"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{bearer_token}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "files",
+									"type": "file",
+									"src": [
+										"/Users/usuario/Downloads/TestUpload/01-20209454585868 - cópia.pdf",
+										"/Users/usuario/Downloads/TestUpload/MOCK_DATA.sql",
+										"/Users/usuario/Downloads/TestUpload/06 Pista 6.mp3"
+									]
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/api/file/v1/uploadMultipleFile",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"file",
+								"v1",
+								"uploadMultipleFile"
+							],
+							"query": [
+								{
+									"key": "files",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Download a file",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{content_accept}}"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{bearer_token}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "fileName",
+									"type": "file",
+									"src": [],
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/api/file/v1/downloadFile/01-20209454585868%20-%20co%CC%81pia.pdf",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"file",
+								"v1",
+								"downloadFile",
+								"01-20209454585868%20-%20co%CC%81pia.pdf"
+							],
+							"query": [
+								{
+									"key": "fileName",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
